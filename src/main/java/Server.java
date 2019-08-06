@@ -2,12 +2,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.Inet4Address;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+    private static final int PORT = 20000;
+
+    //
     public static void main(String[] args) throws IOException {
-        ServerSocket server = new ServerSocket(3000);
+        ServerSocket server = createServerSocket();
+        initServerSocket(server);
+
+        // queue is 50// accept remove
+        server.bind(new InetSocketAddress(Inet4Address.getLocalHost(), PORT), 50);
 
         System.out.println("Server Ready");
         System.out.println("Server:" + server.getInetAddress() + " port " + server.getLocalPort());
@@ -22,6 +31,21 @@ public class Server {
         }
 
 
+    }
+
+    private static void initServerSocket(ServerSocket serverSocket) throws IOException {
+        serverSocket.setReuseAddress(true);
+
+        serverSocket.setReceiveBufferSize(64 * 1024 * 1024);
+
+//        serverSocket.setSoTimeout(2000);
+        serverSocket.setPerformancePreferences(1, 1, 1);
+    }
+
+    private static ServerSocket createServerSocket() throws IOException {
+
+
+        return new ServerSocket();
     }
 
     private static class ClientHandle extends Thread {
