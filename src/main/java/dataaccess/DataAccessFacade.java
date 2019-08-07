@@ -23,7 +23,7 @@ public class DataAccessFacade implements DataAccess {
 
 //    public static final String OUTPUT_DIR = System.getProperty("user.dir") + "\\src\\dataaccess\\storage";
     public static final String OUTPUT_DIR1 = System.getProperty("user.dir")
-            + (OSinfo.isMacOSX() ? "/src/dataaccess/storage" : "\\src\\dataaccess\\storage");
+            + (OSinfo.isMacOSX() ? "/src/main/java/dataaccess/storage/" : "\\src\\main\\java\\dataaccess\\storage\\");
 
 //    public static final String OUTPUT_DIR = System.getProperty("user.dir");
 //    public static final String OUTPUT_DIR1 = System.getProperty("user.dir");
@@ -51,7 +51,14 @@ public class DataAccessFacade implements DataAccess {
         ObjectOutputStream out = null;
         try {
 
-            FileOutputStream fos = new FileOutputStream(OUTPUT_DIR1 +"/"+ type.toString());
+            File file = new File(OUTPUT_DIR1 + type.toString());
+            if (file.getParentFile().exists()) {
+                file.getParentFile().mkdir();
+                file.createNewFile();
+            }
+
+
+            FileOutputStream fos = new FileOutputStream(OUTPUT_DIR1 + type.toString());
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fos);
             objectOutputStream.writeObject(ob);
             objectOutputStream.close();

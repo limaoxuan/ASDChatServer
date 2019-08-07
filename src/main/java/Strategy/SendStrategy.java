@@ -9,8 +9,9 @@ import dao.ReponseModel;
 public class SendStrategy implements MessageStrategy{
     public String handleMessage(MessageModel message, ClientHandler handler) {
 
-
+//        UserManager.getInstance().printUserHandler();
         ClientHandler handler1 = UserManager.getInstance().getHandler(message.getTo());
+
         if (handler1 != null) {
             handler1.send(message.getPayload());
             ReponseModel register = new ReponseModel(true, "send success");

@@ -1,5 +1,7 @@
 package Server;
 
+import Singleton.UserManager;
+
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
@@ -43,12 +45,12 @@ public class TCPServer {
     }
 
 
-    private static class ClientListener extends Thread {
+    private class ClientListener extends Thread {
         private ServerSocket server;
         private boolean done = false;
 
 
-        private  ServerSocket createServerSocket() throws IOException {
+        private ServerSocket createServerSocket() throws IOException {
             return new ServerSocket();
         }
 
@@ -80,14 +82,28 @@ public class TCPServer {
                 Socket client;
                 try {
                     client = server.accept();
-                    // 客户端构建异步线程
-                    ClientHandler clientHandler = new ClientHandler(client);
-                    // 启动线程
-                    clientHandler.start();
                 } catch (IOException e) {
                     continue;
                 }
+                ClientHandler clientHandler = null;
+                try {
+                    // 客户端构建异步线程
+                    clientHandler = new ClientHandler(client, new ClientHandler.CloseNotify() {
+                        public void onSelfClosed(ClientHandler handler) {
+//                            UserManager.re
+                            clientHandlerList.remove(handler);
+                        }
+                    });
+                    // 启动线程
 
+                    clientHandler.readToPrint();
+                    clientHandlerList.add(clientHandler);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("客户端连接异常" + e.getMessage());
+
+                }
             } while (!done);
 
             System.out.println("服务器已关闭！");

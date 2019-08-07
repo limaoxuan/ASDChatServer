@@ -7,12 +7,24 @@ import dataaccess.DataAccessFacade;
 import java.util.HashMap;
 
 public class UserManager {
-//    private HashMap<String, User> currentUser = new HashMap<String, User>();
-    private final HashMap<String, ClientHandler> userHandler = new HashMap<String, ClientHandler>();
+    //    private HashMap<String, User> currentUser = new HashMap<String, User>();
+    private  HashMap<String, ClientHandler> userHandler = new HashMap<String, ClientHandler>();
 
     private static UserManager userManager;
 
     private UserManager() {
+
+    }
+
+    public void printUserHandler() {
+        for (String  key  : userHandler.keySet()) {
+            System.out.println(key);
+        }
+    }
+
+
+    public void addCurrentClientHandle(String str, ClientHandler clientHandler) {
+        userHandler.put(str, clientHandler);
 
     }
 
@@ -25,8 +37,7 @@ public class UserManager {
     }
 
 
-
-    public static  UserManager getInstance() {
+    public static UserManager getInstance() {
         if (userManager == null) {
             synchronized (UserManager.class) {
                 if (userManager == null) {
