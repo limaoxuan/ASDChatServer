@@ -1,10 +1,10 @@
 package Strategy;
 
 import Server.ClientHandler;
-import dao.TestMessage;
+import dao.MessageModel;
 
 public class SendStrategy implements MessageStrategy{
-    public String handleMessage(TestMessage message, ClientHandler handler) {
+    public String handleMessage(MessageModel message, ClientHandler handler) {
 
 
         return "send";

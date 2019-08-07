@@ -1,7 +1,7 @@
 package Client;
 
 import com.alibaba.fastjson.JSON;
-import dao.TestMessage;
+import dao.MessageModel;
 
 import java.io.*;
 import java.net.Inet4Address;
@@ -24,6 +24,7 @@ public class TCPClient {
         initSocket(socket);
     }
 
+
     public void start() throws IOException {
         socket.connect(new InetSocketAddress(Inet4Address.getLocalHost(), this.port), 3000);
         System.out.println("已发起服务器连接，并进入后续流程～");
@@ -41,6 +42,9 @@ public class TCPClient {
         System.out.println("客户端已退出～");
     }
 
+    public void getClient() {
+
+    }
 
     private void initSocket(Socket socket) throws SocketException {
         // load time
@@ -93,12 +97,12 @@ public class TCPClient {
 
 
             if (str.equalsIgnoreCase("register")) {
-                TestMessage testMessage = new TestMessage("register", "", "123456", '0', "");
+                MessageModel testMessage = new MessageModel("register", "", "123456", '0', "");
                 String message = JSON.toJSONString(testMessage);
                 socketPrintStream.println(message);
             } else if (str.equalsIgnoreCase("send")) {
 
-                    TestMessage testMessage = new TestMessage("send", "", "123456", '0', "");
+                    MessageModel testMessage = new MessageModel("send", "", "123456", '0', "");
                     String message = JSON.toJSONString(testMessage);
                     socketPrintStream.println(message);
 

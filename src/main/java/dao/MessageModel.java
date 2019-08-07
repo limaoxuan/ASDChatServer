@@ -1,18 +1,18 @@
 package dao;
 
-public class TestMessage {
+public class MessageModel {
     private String cmd;
     private String to;
     private String from;
-    private int isBroadcast;
-    private String payLoad;
+    private boolean isBroadcast;
+    private String payload;
 
-    public TestMessage(String cmd, String to, String from, int isBroadcast, String payLoad) {
+    public MessageModel(String cmd, String to, String from, boolean isBroadcast, String payload) {
         this.cmd = cmd;
         this.to = to;
         this.from = from;
         this.isBroadcast = isBroadcast;
-        this.payLoad = payLoad;
+        this.payload = payload;
     }
 
     public String getCmd() {
@@ -39,19 +39,27 @@ public class TestMessage {
         this.from = from;
     }
 
-    public int getIsBroadcast() {
+    public boolean getIsBroadcast() {
         return isBroadcast;
     }
 
-    public void setIsBroadcast(int isBroadcast) {
+    public void setIsBroadcast(boolean isBroadcast) {
         this.isBroadcast = isBroadcast;
     }
 
-    public String getPayLoad() {
-        return payLoad;
+    public boolean isBroadcast() {
+        return isBroadcast;
     }
 
-    public void setPayLoad(String payLoad) {
-        this.payLoad = payLoad;
+    public void setBroadcast(boolean broadcast) {
+        isBroadcast = broadcast;
+    }
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
     }
 }

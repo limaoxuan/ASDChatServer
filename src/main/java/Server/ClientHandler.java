@@ -3,7 +3,7 @@ package Server;
 import Factory.MessageStrategyFactory;
 import Strategy.MessageStrategy;
 import com.alibaba.fastjson.JSON;
-import dao.TestMessage;
+import dao.MessageModel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class ClientHandler extends Thread {
                 String str = socketInput.readLine();
                 System.out.println(str);
                 if (JSON.isValid(str)) {
-                    TestMessage testMessage = JSON.parseObject(str, TestMessage.class);
+                    MessageModel testMessage = JSON.parseObject(str, MessageModel.class);
 
                     MessageStrategy messageStrategy = MessageStrategyFactory.getStrategy(testMessage.getCmd());
                     if (messageStrategy != null) {
