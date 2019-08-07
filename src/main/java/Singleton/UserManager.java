@@ -1,23 +1,32 @@
 package Singleton;
 
+import Server.ClientHandler;
 import dao.User;
 import dataaccess.DataAccessFacade;
 
 import java.util.HashMap;
 
 public class UserManager {
-    private HashMap<String, User> currentUser = new HashMap<String, User>();
-    private UserManager userManager;
+//    private HashMap<String, User> currentUser = new HashMap<String, User>();
+    private final HashMap<String, ClientHandler> userHandler = new HashMap<String, ClientHandler>();
+
+    private static UserManager userManager;
 
     private UserManager() {
 
+    }
+
+    public ClientHandler getHandler(String username) {
+        return userHandler.get(username);
     }
 
     public HashMap<String, User> allUser() {
         return new DataAccessFacade().readUserList();
     }
 
-    private UserManager getInstance() {
+
+
+    public static  UserManager getInstance() {
         if (userManager == null) {
             synchronized (UserManager.class) {
                 if (userManager == null) {

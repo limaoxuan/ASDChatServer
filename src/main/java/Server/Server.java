@@ -11,13 +11,8 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
 
-
-
         TCPServer tcpServer = new TCPServer(PORT);
-
-
         tcpServer.start();
-
 
     }
 

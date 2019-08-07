@@ -20,7 +20,7 @@ public class ClientHandler extends Thread {
         this.socket = socket;
     }
 
-    public void send(String str) {
+    public  void send(String str) {
         try {
             PrintStream socketOutput = new PrintStream(socket.getOutputStream());
             socketOutput.println(str);

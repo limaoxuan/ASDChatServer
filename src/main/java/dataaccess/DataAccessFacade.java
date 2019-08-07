@@ -39,7 +39,7 @@ public class DataAccessFacade implements DataAccess {
 
     public void addUser(User user) {
         HashMap<String, User> users = readUserList();
-        String userId = user.getId();
+        String userId = user.getUsername();
         if (users!=null)
             users.put(userId, user);
         else
@@ -51,7 +51,7 @@ public class DataAccessFacade implements DataAccess {
         ObjectOutputStream out = null;
         try {
 
-            FileOutputStream fos = new FileOutputStream(OUTPUT_DIR1 + type.toString());
+            FileOutputStream fos = new FileOutputStream(OUTPUT_DIR1 +"/"+ type.toString());
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fos);
             objectOutputStream.writeObject(ob);
             objectOutputStream.close();

@@ -97,12 +97,11 @@ public class TCPClient {
 
 
             if (str.equalsIgnoreCase("register")) {
-                MessageModel testMessage = new MessageModel("register", "", "123456", '0', "");
+                MessageModel testMessage = new MessageModel("register", "", "123456", true, "");
                 String message = JSON.toJSONString(testMessage);
                 socketPrintStream.println(message);
             } else if (str.equalsIgnoreCase("send")) {
-
-                    MessageModel testMessage = new MessageModel("send", "", "123456", '0', "");
+                    MessageModel testMessage = new MessageModel("send", "23456", "123456", false, "");
                     String message = JSON.toJSONString(testMessage);
                     socketPrintStream.println(message);
 
