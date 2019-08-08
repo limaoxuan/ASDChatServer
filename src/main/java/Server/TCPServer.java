@@ -14,7 +14,7 @@ public class TCPServer {
 
     private final int port;
     private ClientListener mListener;
-    private List<ClientHandler> clientHandlerList = new ArrayList<ClientHandler>();
+//    private List<ClientHandler> clientHandlerList = new ArrayList<ClientHandler>();
 
     public TCPServer(int port) {
         this.port = port;
@@ -37,11 +37,11 @@ public class TCPServer {
         if (mListener != null) {
             mListener.exit();
         }
-        for (ClientHandler client : clientHandlerList) {
-            client.exit();
-        }
-
-        clientHandlerList.clear();
+//        for (ClientHandler client : clientHandlerList) {
+//            client.exit();
+//        }
+        UserManager.getInstance().removeAll();
+//        clientHandlerList.clear();
     }
 
 
@@ -90,14 +90,14 @@ public class TCPServer {
                     // 客户端构建异步线程
                     clientHandler = new ClientHandler(client, new ClientHandler.CloseNotify() {
                         public void onSelfClosed(ClientHandler handler) {
-//                            UserManager.re
-                            clientHandlerList.remove(handler);
+//
+                            UserManager.getInstance().remove(handler);
                         }
                     });
                     // 启动线程
 
                     clientHandler.readToPrint();
-                    clientHandlerList.add(clientHandler);
+//                    clientHandlerList.add(clientHandler);
 
                 } catch (IOException e) {
                     e.printStackTrace();

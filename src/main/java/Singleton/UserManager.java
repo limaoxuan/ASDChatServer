@@ -8,7 +8,8 @@ import java.util.HashMap;
 
 public class UserManager {
     //    private HashMap<String, User> currentUser = new HashMap<String, User>();
-    private  HashMap<String, ClientHandler> userHandler = new HashMap<String, ClientHandler>();
+    private HashMap<String, ClientHandler> userHandler = new HashMap<String, ClientHandler>();
+    private HashMap<ClientHandler, String> handlerUser = new HashMap<ClientHandler, String>();
 
     private static UserManager userManager;
 
@@ -16,8 +17,24 @@ public class UserManager {
 
     }
 
+    public void removeAll() {
+        for (ClientHandler client : handlerUser.keySet()) {
+            client.exit();
+        }
+        userHandler.clear();
+        handlerUser.clear();
+    }
+
+    public void remove(ClientHandler clientHandler) {
+        String username = handlerUser.get(clientHandler);
+        if (username != null) {
+            userHandler.remove(username);
+            handlerUser.remove(clientHandler);
+        }
+    }
+
     public void printUserHandler() {
-        for (String  key  : userHandler.keySet()) {
+        for (String key : userHandler.keySet()) {
             System.out.println(key);
         }
     }
@@ -25,6 +42,7 @@ public class UserManager {
 
     public void addCurrentClientHandle(String str, ClientHandler clientHandler) {
         userHandler.put(str, clientHandler);
+        handlerUser.put(clientHandler, str);
 
     }
 

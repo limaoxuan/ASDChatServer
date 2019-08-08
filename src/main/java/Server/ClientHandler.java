@@ -35,7 +35,6 @@ public class ClientHandler extends Thread {
         writeHandler.exit();
         CloseUtils.close(socket);
         System.out.println("Client exit" + socket.getInetAddress() + "port " + socket.getPort());
-
     }
 
     public void send(String str) {

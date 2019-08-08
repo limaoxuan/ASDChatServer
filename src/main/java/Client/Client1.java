@@ -9,7 +9,7 @@ public class Client1 {
 
         public static void main(String[] args) {
             try {
-                
+
                 TCPClient tcpClient1 = new TCPClient(20002, PORT, "");
                 tcpClient1.start();
 
