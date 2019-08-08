@@ -7,8 +7,7 @@ import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class TCPServer {
 
@@ -37,11 +36,7 @@ public class TCPServer {
         if (mListener != null) {
             mListener.exit();
         }
-//        for (ClientHandler client : clientHandlerList) {
-//            client.exit();
-//        }
         UserManager.getInstance().removeAll();
-//        clientHandlerList.clear();
     }
 
 

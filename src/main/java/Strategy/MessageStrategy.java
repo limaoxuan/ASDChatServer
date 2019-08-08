@@ -2,7 +2,8 @@ package Strategy;
 
 import Server.ClientHandler;
 import dao.MessageModel;
+import dao.ResponseModel;
 
 public interface MessageStrategy {
-    public String handleMessage(MessageModel string, ClientHandler handler);
+    public ResponseModel handleMessage(MessageModel string, ClientHandler handler);
 }

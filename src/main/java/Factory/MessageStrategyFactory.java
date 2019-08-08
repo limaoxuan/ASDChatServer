@@ -1,5 +1,6 @@
 package Factory;
 
+import Strategy.LoginStrategy;
 import Strategy.MessageStrategy;
 import Strategy.RegisterStrategy;
 import Strategy.SendStrategy;
@@ -14,13 +15,12 @@ public class MessageStrategyFactory {
     static {
         MESSAGE_STRATEGY_MAP.put(MessageKey.register, new RegisterStrategy());
         MESSAGE_STRATEGY_MAP.put(MessageKey.send, new SendStrategy());
+        MESSAGE_STRATEGY_MAP.put(MessageKey.login, new LoginStrategy());
 
     }
 
     public static MessageStrategy getStrategy(String messageKey) {
-
-        MessageStrategy messageStrategy = MESSAGE_STRATEGY_MAP.get(messageKey);
-        return messageStrategy;
+        return MESSAGE_STRATEGY_MAP.get(messageKey);
 
     }
 
@@ -31,6 +31,7 @@ public class MessageStrategyFactory {
     private interface MessageKey{
         String register = "register";
         String send = "send";
+        String login = "login";
 
     }
 }

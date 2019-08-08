@@ -79,64 +79,6 @@ public class TCPClient {
         return socket;
     }
 
-    private void todo(Socket client) throws IOException {
-        // 构建键盘输入流
-        InputStream in = System.in;
-        BufferedReader input = new BufferedReader(new InputStreamReader(in));
-
-
-        // 得到Socket输出流，并转换为打印流
-        OutputStream outputStream = client.getOutputStream();
-        PrintStream socketPrintStream = new PrintStream(outputStream);
-
-
-        // 得到Socket输入流，并转换为BufferedReader
-        InputStream inputStream = client.getInputStream();
-        BufferedReader socketBufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        boolean flag = true;
-        do {
-            // 键盘读取一行
-            String str = input.readLine();
-
-
-            if (str.equalsIgnoreCase("register")) {
-                MessageModel testMessage = new MessageModel("register", "", "123456", true, "");
-                String message = JSON.toJSONString(testMessage);
-                socketPrintStream.println(message);
-            } else if (str.equalsIgnoreCase("send")) {
-                MessageModel testMessage = new MessageModel("send", "234567", "123456", false, "hello");
-                String message = JSON.toJSONString(testMessage);
-                socketPrintStream.println(message);
-
-            }
-            if (str.equalsIgnoreCase("register1")) {
-                MessageModel testMessage = new MessageModel("register", "", "234567", true, "");
-                String message = JSON.toJSONString(testMessage);
-                socketPrintStream.println(message);
-            }
-
-            if (str.equalsIgnoreCase("send1")) {
-                MessageModel testMessage = new MessageModel("send", "123456", "234567", true, "hello1");
-                String message = JSON.toJSONString(testMessage);
-                socketPrintStream.println(message);
-            }
-
-
-            // 从服务器读取一行
-            String echo = socketBufferedReader.readLine();
-            if ("bye".equalsIgnoreCase(echo)) {
-                flag = false;
-            } else {
-                System.out.println(echo);
-            }
-        } while (flag);
-
-        // 资源释放
-        socketPrintStream.close();
-        socketBufferedReader.close();
-
-    }
 
 
     private static void write(Socket client) throws IOException {

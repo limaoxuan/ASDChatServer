@@ -1,30 +1,21 @@
 package Strategy;
 
+import Factory.ResponseMessageFactory;
 import Server.ClientHandler;
 import Singleton.UserManager;
-import com.alibaba.fastjson.JSON;
 import dao.MessageModel;
-import dao.ReponseModel;
+import dao.ResponseModel;
 
-public class SendStrategy implements MessageStrategy{
-    public String handleMessage(MessageModel message, ClientHandler handler) {
+public class SendStrategy implements MessageStrategy {
 
-//        UserManager.getInstance().printUserHandler();
-        ClientHandler handler1 = UserManager.getInstance().getHandler(message.getTo());
+    public ResponseModel handleMessage(MessageModel message, ClientHandler handler) {
 
-        if (handler1 != null) {
-            handler1.send(message.getPayload());
-            ReponseModel register = new ReponseModel(true, "send success");
-            String res = JSON.toJSONString(register);
+        ClientHandler targetHandler = UserManager.getInstance().getHandler(message.getTo());
 
-            return res;
-         } else {
-            ReponseModel register = new ReponseModel(false, "user not fount");
-            String res = JSON.toJSONString(register);
-
-            return res;
+        if (targetHandler != null) {
+            targetHandler.send(message.getPayload());
+            return ResponseMessageFactory.sendMessageSuccess();
         }
-
-
+        return ResponseMessageFactory.sendMessageFail();
     }
 }

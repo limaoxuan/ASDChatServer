@@ -1,11 +1,11 @@
 package Server;
 
+import COR.ChainBuilder;
 import Factory.MessageStrategyFactory;
-import Singleton.UserManager;
 import Strategy.MessageStrategy;
 import com.alibaba.fastjson.JSON;
 import dao.MessageModel;
-import dao.ReponseModel;
+import dao.ResponseModel;
 import utility.CloseUtils;
 
 import java.io.*;
@@ -21,7 +21,7 @@ public class ClientHandler extends Thread {
     private final CloseNotify closeNotify;
 
 
-    public ClientHandler(Socket socket,CloseNotify closeNotify) throws IOException {
+    public ClientHandler(Socket socket, CloseNotify closeNotify) throws IOException {
         this.socket = socket;
         this.readHandler = new ClientReadHandler(socket.getInputStream());
         this.writeHandler = new ClientWriteHandler(socket.getOutputStream());
@@ -46,13 +46,12 @@ public class ClientHandler extends Thread {
     }
 
 
-
     private void exitByYourself() {
         exit();
         closeNotify.onSelfClosed(this);
     }
 
-    public interface CloseNotify{
+    public interface CloseNotify {
         void onSelfClosed(ClientHandler handler);
     }
 
@@ -88,10 +87,10 @@ public class ClientHandler extends Thread {
                 if (ClientWriteHandler.this.done) {
                     return;
                 }
-                try{
+                try {
                     System.out.println(msg);
                     ClientWriteHandler.this.printStream.println(msg);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -121,25 +120,16 @@ public class ClientHandler extends Thread {
                 do {
                     //客户端拿到数据
                     String str = socketInput.readLine();
-
+                    System.out.println(str);
                     if (str == null) {
                         System.out.println("客户端已无法读取数据");
                         //退出客户端
                         ClientHandler.this.exitByYourself();
                         break;
                     }
-
-                    //打印到屏幕
-                    System.out.println(str);
-//                    MessageModel
-                    if (JSON.isValid(str)) {
-                        MessageModel messageModel = JSON.parseObject(str,MessageModel.class);
-                        MessageStrategy strategy = MessageStrategyFactory.getStrategy(messageModel.getCmd());
-                        String s = strategy.handleMessage(messageModel, ClientHandler.this);
-                        socketOutput.println(s);
-                    }
-
-
+                    ChainBuilder chainBuilder = new ChainBuilder();
+                    ResponseModel responseModel = chainBuilder.getAbstractHandler().handleRequest(str, ClientHandler.this);
+                    socketOutput.println(JSON.toJSONString(responseModel));
                 } while (!done);
 
 

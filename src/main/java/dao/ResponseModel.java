@@ -1,10 +1,10 @@
 package dao;
 
-public class ReponseModel {
+public class ResponseModel {
     private boolean success;
     private String payload;
 
-    public ReponseModel(boolean success, String payload) {
+    public ResponseModel(boolean success, String payload) {
         this.success = success;
         this.payload = payload;
     }

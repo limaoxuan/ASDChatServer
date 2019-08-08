@@ -3,51 +3,57 @@ package dataaccess;
 import dao.User;
 import utility.OSinfo;
 
-import java.awt.print.Book;
 import java.io.*;
 
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 public class DataAccessFacade implements DataAccess {
-
-
 
 
     enum StorageType {
         USERS
     }
 
-
-//    public static final String OUTPUT_DIR = System.getProperty("user.dir") + "\\src\\dataaccess\\storage";
     public static final String OUTPUT_DIR1 = System.getProperty("user.dir")
             + (OSinfo.isMacOSX() ? "/src/main/java/dataaccess/storage/" : "\\src\\main\\java\\dataaccess\\storage\\");
-
-//    public static final String OUTPUT_DIR = System.getProperty("user.dir");
-//    public static final String OUTPUT_DIR1 = System.getProperty("user.dir");
 
     public static final String DATE_PATTERN = "MM/dd/yyyy";
 
 
-
     @SuppressWarnings("unchecked")
     public HashMap<String, User> readUserList() {
-        return  (HashMap<String, User>) readFromStorage(StorageType.USERS);
+        return (HashMap<String, User>) readFromStorage(StorageType.USERS);
     }
 
-    public void addUser(User user) {
+    public boolean addUser(User user) {
         HashMap<String, User> users = readUserList();
         String userId = user.getUsername();
-        if (users!=null)
-            users.put(userId, user);
-        else
+        if (users == null) {
             users = new HashMap<String, User>();
+        }
+        if (users.containsKey(userId)) {
+            return false;
+        }
+        users.put(userId, user);
         saveToStorage(StorageType.USERS, users);
+        return true;
     }
 
-    static void saveToStorage(StorageType type, Object ob) {
+    public boolean checkLoginUser(User user) {
+        HashMap<String, User> users = readUserList();
+        if (!users.containsKey(user.getUsername())) {
+            return false;
+        }
+        User current = users.get(user.getUsername());
+        if (!current.getPassword().equals(user.getPassword())) {
+            return false;
+
+        }
+        return true;
+    }
+
+    private void saveToStorage(StorageType type, Object ob) {
         ObjectOutputStream out = null;
         try {
 
@@ -75,25 +81,23 @@ public class DataAccessFacade implements DataAccess {
         }
     }
 
-    static Object readFromStorage(StorageType type) {
-        ObjectInputStream in = null;
+    private Object readFromStorage(StorageType type) {
+        ObjectInputStream objectInputStream = null;
         Object retVal = null;
         try {
 
             FileInputStream is = new FileInputStream(OUTPUT_DIR1 + type.toString());
 
-            ObjectInputStream objectInputStream = new ObjectInputStream(is);
+            objectInputStream = new ObjectInputStream(is);
             retVal = objectInputStream.readObject();
-            objectInputStream.close();
-            ;
 
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (in != null) {
+            if (objectInputStream != null) {
                 try {
-                    in.close();
+                    objectInputStream.close();
                 } catch (Exception e) {
                 }
             }
@@ -101,39 +105,5 @@ public class DataAccessFacade implements DataAccess {
         return retVal;
     }
 
-//    final static class Pair<S, T> implements Serializable {
-//
-//        S first;
-//        T second;
-//
-//        Pair(S s, T t) {
-//            first = s;
-//            second = t;
-//        }
-//
-//        @Override
-//        public boolean equals(Object ob) {
-//            if (ob == null)
-//                return false;
-//            if (this == ob)
-//                return true;
-//            if (ob.getClass() != getClass())
-//                return false;
-//            @SuppressWarnings("unchecked")
-//            Pair<S, T> p = (Pair<S, T>) ob;
-//            return p.first.equals(first) && p.second.equals(second);
-//        }
-//
-//        @Override
-//        public int hashCode() {
-//            return first.hashCode() + 5 * second.hashCode();
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return "(" + first.toString() + ", " + second.toString() + ")";
-//        }
-//
-//        private static final long serialVersionUID = 5399827794066637059L;
-//    }
+
 }

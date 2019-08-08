@@ -1,10 +1,14 @@
 package Strategy;
 
 import Server.ClientHandler;
+import Singleton.UserManager;
 import dao.MessageModel;
+import dao.ResponseModel;
 
 public class UserListStrategy implements MessageStrategy{
-    public String handleMessage(MessageModel string, ClientHandler handler) {
+    public ResponseModel handleMessage(MessageModel messageModel, ClientHandler handler) {
+
+//        UserManager.getInstance().g
         return null;
     }
 }

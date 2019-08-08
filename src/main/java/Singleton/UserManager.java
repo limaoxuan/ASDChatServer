@@ -1,6 +1,8 @@
 package Singleton;
 
+import Factory.ResponseMessageFactory;
 import Server.ClientHandler;
+import dao.ResponseModel;
 import dao.User;
 import dataaccess.DataAccessFacade;
 
@@ -15,6 +17,10 @@ public class UserManager {
 
     private UserManager() {
 
+    }
+
+    public boolean checkLoginUser(String username, String password) {
+        return new DataAccessFacade().checkLoginUser(new User(username, password));
     }
 
     public void removeAll() {
@@ -33,10 +39,13 @@ public class UserManager {
         }
     }
 
-    public void printUserHandler() {
-        for (String key : userHandler.keySet()) {
-            System.out.println(key);
+    public ResponseModel getCurrentUser() {
+        StringBuffer res = new StringBuffer();
+        for (String username : userHandler.keySet()) {
+            res.append(username + ",");
         }
+        res.deleteCharAt(res.length() - 1);
+        return ResponseMessageFactory.responseMessage(true,res.toString());
     }
 
 

@@ -1,0 +1,22 @@
+package COR;
+
+import javax.xml.validation.ValidatorHandler;
+
+public class ChainBuilder {
+    private AbstractHandler abstractHandler;
+
+    public ChainBuilder() {
+        buildChain();
+    }
+
+    private void buildChain() {
+        AbstractHandler jsonHandler = new JSONHandler();
+        AbstractHandler messageHandler = new MessageHandler();
+        jsonHandler.nextHandler = messageHandler;
+        abstractHandler = jsonHandler;
+    }
+    public AbstractHandler getAbstractHandler() {
+        return abstractHandler;
+    }
+
+}
