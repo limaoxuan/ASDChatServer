@@ -1,10 +1,8 @@
 package Server;
 
-import COR.ChainBuilder;
-import Factory.MessageStrategyFactory;
-import Strategy.MessageStrategy;
+import COR.AbChainBuilderTemplate;
+import Buiness.MyChainBuilder;
 import com.alibaba.fastjson.JSON;
-import dao.MessageModel;
 import dao.ResponseModel;
 import utility.CloseUtils;
 
@@ -112,30 +110,30 @@ public class ClientHandler extends Thread {
             super.run();
 
             try {
-                //得到打印流，用于数据输出，服务器回送数据使用
+                //get socketOutput response data to client
                 PrintStream socketOutput = new PrintStream(socket.getOutputStream());
-                //得到输入流，用于接收数据
+                //get socketInput receive data
                 BufferedReader socketInput = new BufferedReader(new InputStreamReader(inputStream));
 
                 do {
-                    //客户端拿到数据
+                    //client get data
                     String str = socketInput.readLine();
                     System.out.println(str);
                     if (str == null) {
-                        System.out.println("客户端已无法读取数据");
-                        //退出客户端
+                        System.out.println("Client can't load data");
+                        //exit client
                         ClientHandler.this.exitByYourself();
                         break;
                     }
-                    ChainBuilder chainBuilder = new ChainBuilder();
-                    ResponseModel responseModel = chainBuilder.getAbstractHandler().handleRequest(str, ClientHandler.this);
-                    socketOutput.println(JSON.toJSONString(responseModel));
+                    AbChainBuilderTemplate chainBuilder = new MyChainBuilder();
+                    chainBuilder.build();
+                    socketOutput.println(chainBuilder.getAbstractHandler().handleRequest(str, ClientHandler.this));
                 } while (!done);
 
 
             } catch (Exception e) {
                 if (!done) {
-                    System.out.println("连接异常断开～");
+                    System.out.println("connect error close~");
                     ClientHandler.this.exitByYourself();
                 }
             } finally {

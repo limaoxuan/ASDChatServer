@@ -11,7 +11,7 @@ import dataaccess.DataAccessFacade;
 
 public class RegisterStrategy implements MessageStrategy {
     public ResponseModel handleMessage(MessageModel model, ClientHandler handler) {
-        boolean success = new DataAccessFacade().addUser(new User(model.getFrom(), model.getPayload()));
+        boolean success = UserManager.getInstance().addUser(model.getFrom(), model.getPayload());
         if (success) {
             UserManager.getInstance().addCurrentClientHandle(model.getFrom(), handler);
             return ResponseMessageFactory.registerUserSuccess();

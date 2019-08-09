@@ -28,15 +28,26 @@ public class ResponseMessageFactory {
         return responseMessage(false, "login failure");
     }
 
+    public static ResponseModel addGroupSuccess() {
+        return responseMessage(true, "add success");
+    }
+
+    public static ResponseModel addGroupFail() {
+        return responseMessage(false, "add failure");
+    }
 
     public static ResponseModel invalidJSON() {
         return new ResponseModel(false, "Invalid JSON");
     }
 
+    public static ResponseModel errorMessage() {
+        return new ResponseModel(false, "Connect Error");
+    }
+
+
     public static ResponseModel responseMessage(boolean success, String message) {
         return new ResponseModel(success, message);
     }
 
-    private ResponseMessageFactory() {
-    }
+
 }

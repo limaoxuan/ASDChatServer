@@ -1,9 +1,6 @@
 package Factory;
 
-import Strategy.LoginStrategy;
-import Strategy.MessageStrategy;
-import Strategy.RegisterStrategy;
-import Strategy.SendStrategy;
+import Strategy.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +13,8 @@ public class MessageStrategyFactory {
         MESSAGE_STRATEGY_MAP.put(MessageKey.register, new RegisterStrategy());
         MESSAGE_STRATEGY_MAP.put(MessageKey.send, new SendStrategy());
         MESSAGE_STRATEGY_MAP.put(MessageKey.login, new LoginStrategy());
+        MESSAGE_STRATEGY_MAP.put(MessageKey.userList, new UserListStrategy());
+        MESSAGE_STRATEGY_MAP.put(MessageKey.group, new GroupStrategy());
 
     }
 
@@ -32,6 +31,8 @@ public class MessageStrategyFactory {
         String register = "register";
         String send = "send";
         String login = "login";
+        String userList = "userList";
+        String group = "group";
 
     }
 }

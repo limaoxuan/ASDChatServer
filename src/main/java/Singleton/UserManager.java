@@ -19,8 +19,14 @@ public class UserManager {
 
     }
 
+
+
     public boolean checkLoginUser(String username, String password) {
         return new DataAccessFacade().checkLoginUser(new User(username, password));
+    }
+
+    public boolean addUser(String username, String password) {
+        return  new DataAccessFacade().addUser(new User(username, password));
     }
 
     public void removeAll() {

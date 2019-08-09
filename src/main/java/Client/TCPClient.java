@@ -104,14 +104,36 @@ public class TCPClient {
                 socketPrintStream.println(message);
 
             }
+            if (str.equalsIgnoreCase("login")) {
+                MessageModel testMessage = new MessageModel("login", "", "123456", true, "");
+                String message = JSON.toJSONString(testMessage);
+                socketPrintStream.println(message);
+            }
+
+            if (str.equalsIgnoreCase("login1")) {
+                MessageModel testMessage = new MessageModel("login", "", "234567", true, "");
+                String message = JSON.toJSONString(testMessage);
+                socketPrintStream.println(message);
+            }
+
             if (str.equalsIgnoreCase("register1")) {
-                MessageModel testMessage = new MessageModel("register", "", "234567", true, "");
+                MessageModel testMessage = new MessageModel("register", "", "234567", false, "");
                 String message = JSON.toJSONString(testMessage);
                 socketPrintStream.println(message);
             }
 
             else if (str.equalsIgnoreCase("send1")) {
-                MessageModel testMessage = new MessageModel("send", "123456", "234567", true, "hello1");
+                MessageModel testMessage = new MessageModel("send", "123456", "234567", false, "hello1");
+                String message = JSON.toJSONString(testMessage);
+                socketPrintStream.println(message);
+            }
+            else if (str.equalsIgnoreCase("sendAll")) {
+                MessageModel testMessage = new MessageModel("send", "hello", "234567", true, "hello1");
+                String message = JSON.toJSONString(testMessage);
+                socketPrintStream.println(message);
+            }
+            else if (str.equalsIgnoreCase("Group")) {
+                MessageModel testMessage = new MessageModel("group", "", "hello", false, "123456,234567");
                 String message = JSON.toJSONString(testMessage);
                 socketPrintStream.println(message);
             }

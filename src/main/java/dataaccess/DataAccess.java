@@ -11,4 +11,10 @@ public interface DataAccess {
 
     public boolean checkLoginUser(User user);
 
+    public boolean addGroup(String teamName, String members);
+
+    public HashMap<String, String> readGroupList();
+
+    public String getGroupUsers(String groupName);
+
 }

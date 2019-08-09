@@ -10,10 +10,6 @@ public class Client {
         try {
             TCPClient tcpClient = new TCPClient(LOCAL_PORT, PORT, "");
             tcpClient.start();
-//
-//            TCPClient tcpClient1 = new TCPClient(20002, PORT, "");
-//            tcpClient.start();
-
 
         } catch (IOException e) {
 

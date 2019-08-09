@@ -12,11 +12,15 @@ public class DataAccessFacade implements DataAccess {
 
 
     enum StorageType {
-        USERS
+        USERS, GROUPS
     }
 
     public static final String OUTPUT_DIR1 = System.getProperty("user.dir")
             + (OSinfo.isMacOSX() ? "/src/main/java/dataaccess/storage/" : "\\src\\main\\java\\dataaccess\\storage\\");
+
+    public static final String OUTPUT_DIR2 = System.getProperty("user.dir")
+            + (OSinfo.isMacOSX() ? "/src/main/java/dataaccess/storage/" : "\\src\\main\\java\\dataaccess\\storage\\");
+
 
     public static final String DATE_PATTERN = "MM/dd/yyyy";
 
@@ -24,6 +28,27 @@ public class DataAccessFacade implements DataAccess {
     @SuppressWarnings("unchecked")
     public HashMap<String, User> readUserList() {
         return (HashMap<String, User>) readFromStorage(StorageType.USERS);
+    }
+
+    @SuppressWarnings("unchecked")
+    public HashMap<String, String> readGroupList() {
+        return (HashMap<String, String>) readFromStorage(StorageType.GROUPS);
+    }
+
+    public String getGroupUsers(String groupName) {
+        HashMap<String, String> map = readGroupList();
+        return map.get(groupName);
+
+    }
+
+    public boolean addGroup(String teamName, String members) {
+        HashMap<String, String> mapMap = readGroupList();
+        if (mapMap == null) {
+            mapMap = new HashMap<String, String>();
+        }
+        mapMap.put(teamName, members);
+        saveToStorage(StorageType.GROUPS, mapMap);
+        return true;
     }
 
     public boolean addUser(User user) {

@@ -7,8 +7,6 @@ import dao.ResponseModel;
 
 public class UserListStrategy implements MessageStrategy{
     public ResponseModel handleMessage(MessageModel messageModel, ClientHandler handler) {
-
-//        UserManager.getInstance().g
-        return null;
+        return UserManager.getInstance().getCurrentUser();
     }
 }
