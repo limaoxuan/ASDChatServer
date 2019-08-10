@@ -14,6 +14,7 @@ public class SendStrategy implements MessageStrategy {
 
         if (message.isBroadcast()) {
             String users = GroupManager.getInstance().getGroupsUsers(message.getTo());
+            System.out.println(users);
             if (users == null) {
                 return ResponseMessageFactory.sendMessageFail();
             }

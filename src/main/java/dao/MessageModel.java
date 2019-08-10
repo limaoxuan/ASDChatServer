@@ -4,14 +4,14 @@ public class MessageModel {
     private String cmd;
     private String to;
     private String from;
-    private boolean isBroadcast;
+    private boolean broadcast;
     private String payload;
 
-    public MessageModel(String cmd, String to, String from, boolean isBroadcast, String payload) {
+    public MessageModel(String cmd, String to, String from, boolean broadcast, String payload) {
         this.cmd = cmd;
         this.to = to;
         this.from = from;
-        this.isBroadcast = isBroadcast;
+        this.broadcast = broadcast;
         this.payload = payload;
     }
 
@@ -39,20 +39,13 @@ public class MessageModel {
         this.from = from;
     }
 
-    public boolean getIsBroadcast() {
-        return isBroadcast;
-    }
-
-    public void setIsBroadcast(boolean isBroadcast) {
-        this.isBroadcast = isBroadcast;
-    }
 
     public boolean isBroadcast() {
-        return isBroadcast;
+        return broadcast;
     }
 
     public void setBroadcast(boolean broadcast) {
-        isBroadcast = broadcast;
+        this.broadcast = broadcast;
     }
 
     public String getPayload() {

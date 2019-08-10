@@ -15,11 +15,14 @@ public class MessageStrategyFactory {
         MESSAGE_STRATEGY_MAP.put(MessageKey.login, new LoginStrategy());
         MESSAGE_STRATEGY_MAP.put(MessageKey.userList, new UserListStrategy());
         MESSAGE_STRATEGY_MAP.put(MessageKey.group, new GroupStrategy());
+        MESSAGE_STRATEGY_MAP.put(MessageKey.groupList, new GroupListStrategy());
 
     }
 
     public static MessageStrategy getStrategy(String messageKey) {
-        return MESSAGE_STRATEGY_MAP.get(messageKey);
+
+        MessageStrategy messageStrategy = MESSAGE_STRATEGY_MAP.get(messageKey);
+        return  messageStrategy != null ? messageStrategy : new CommonStrategy();
 
     }
 
@@ -27,12 +30,13 @@ public class MessageStrategyFactory {
 
     }
 
-    private interface MessageKey{
+    private interface MessageKey {
         String register = "register";
         String send = "send";
         String login = "login";
         String userList = "userList";
         String group = "group";
+        String groupList = "groupList";
 
     }
 }

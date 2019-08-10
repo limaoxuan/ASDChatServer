@@ -3,6 +3,7 @@ package Singleton;
 import Server.ClientHandler;
 import dataaccess.DataAccessFacade;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GroupManager {
@@ -21,8 +22,17 @@ public class GroupManager {
 
     public String getGroupsUsers(String group) {
 //        HashMap<String, String> map = new DataAccessFacade().readGroupList();
-       ;
-        return  new DataAccessFacade().getGroupUsers(group);
+        ;
+        return new DataAccessFacade().getGroupUsers(group);
+    }
+
+    public String getGroups() {
+        HashMap<String, String> mapMap = new DataAccessFacade().readGroupList();
+        ArrayList<String> list = new ArrayList<>();
+        for (String str : mapMap.keySet()) {
+            list.add(str);
+        }
+        return String.join(",",list);
     }
 
 

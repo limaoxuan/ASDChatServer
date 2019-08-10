@@ -38,7 +38,6 @@ public class DataAccessFacade implements DataAccess {
     public String getGroupUsers(String groupName) {
         HashMap<String, String> map = readGroupList();
         return map.get(groupName);
-
     }
 
     public boolean addGroup(String teamName, String members) {
