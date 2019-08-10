@@ -20,13 +20,12 @@ public class UserManager {
     }
 
 
-
     public boolean checkLoginUser(String username, String password) {
         return new DataAccessFacade().checkLoginUser(new User(username, password));
     }
 
     public boolean addUser(String username, String password) {
-        return  new DataAccessFacade().addUser(new User(username, password));
+        return new DataAccessFacade().addUser(new User(username, password));
     }
 
     public void removeAll() {
@@ -50,8 +49,12 @@ public class UserManager {
         for (String username : userHandler.keySet()) {
             res.append(username + ",");
         }
+        if (res.length() == 0) {
+            return ResponseMessageFactory.responseMessage(true, "Current No User Login in");
+        }
+
         res.deleteCharAt(res.length() - 1);
-        return ResponseMessageFactory.responseMessage(true,res.toString());
+        return ResponseMessageFactory.responseMessage(true, res.toString());
     }
 
 

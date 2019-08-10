@@ -1,7 +1,7 @@
 package COR;
 
 
-import Buiness.MessageHandler;
+import Business.MessageHandler;
 
 public class ChainBuilder {
     private AbstractHandler abstractHandler;

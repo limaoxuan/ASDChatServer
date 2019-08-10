@@ -1,10 +1,10 @@
 package Server;
 
 import COR.AbChainBuilderTemplate;
-import Buiness.MyChainBuilder;
-import com.alibaba.fastjson.JSON;
-import dao.ResponseModel;
+import Business.MyChainBuilder;
 import utility.CloseUtils;
+import utility.GetSystemSetting;
+import utility.PropertyInterface;
 
 import java.io.*;
 import java.net.Socket;
@@ -125,7 +125,11 @@ public class ClientHandler extends Thread {
                         ClientHandler.this.exitByYourself();
                         break;
                     }
-                    AbChainBuilderTemplate chainBuilder = new MyChainBuilder();
+//                    Class.forName(")
+//                    System.out.println(new MyChainBuilder().getClass().getName());
+//                    System.out.println(GetSystemSetting.getValueFromSetting(PropertyInterface.rootBuilder));
+                    AbChainBuilderTemplate chainBuilder = (AbChainBuilderTemplate) Class.forName(GetSystemSetting.getValueFromSetting(PropertyInterface.rootBuilder)).newInstance();
+//                    AbChainBuilderTemplate chainBuilder = new MyChainBuilder();
                     chainBuilder.build();
                     socketOutput.println(chainBuilder.getAbstractHandler().handleRequest(str, ClientHandler.this));
                 } while (!done);

@@ -1,4 +1,4 @@
-package Buiness;
+package Business;
 
 
 import COR.AbChainBuilderTemplate;
